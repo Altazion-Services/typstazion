@@ -15,4 +15,8 @@
 
 ## Installation
 
-This library is designed to be used as submodule.
+This library is designed to be used as submodule. To install it, run the following command:
+
+```bash
+git submodule add git@github.com:Altazion-Services/typstazion.git ./packages/typestazion
+```
