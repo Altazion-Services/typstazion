@@ -6,7 +6,7 @@ export default function consoleHandler(nuxtApp: NuxtAppInterface) {
     };
 
     nuxtApp.vueApp.config.warnHandler = (msg: string, _, trace: string) => {
-        if (process.env.IGNORE_CONSOLE_WARNINGS) {
+        if (Boolean(process.env.IGNORE_CONSOLE_WARNINGS)) {
             return;
         }
         console.warn(msg, trace);
