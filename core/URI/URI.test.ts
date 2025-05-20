@@ -7,6 +7,8 @@ test('URI.resolve(), Should return a formatted url', () =>
         { test: ['https://example.com', 'auth', 'login'], result: 'https://example.com/auth/login' },
         { test: ['https://example.com', '/auth', '/login/'], result: 'https://example.com/auth/login' },
         { test: ['https://example.com', '/auth', 'login'], result: 'https://example.com/auth/login' },
+        { test: ['https://////example.com', '/auth//', '/////login'], result: 'https://example.com/auth/login' },
+        { test: ['https:///example.com//lol', '/auth//', '/////login'], result: 'https://example.com/lol/auth/login' },
     ].forEach(({ test, result }) => expect(URI.resolve(...test)).toBe(result)));
 
 test('URI.enforceHtmExtension(), Should add .htm when needed', () => {
