@@ -12,4 +12,24 @@ export default class URI {
             ? path
             : `${path.endsWith('.html') ? path.split('.html')[0] : path}.htm`;
     }
+
+    public static buildQueryString(
+        params: Record<string, string | number | boolean | null | undefined | Array<string>> | undefined
+    ): string {
+        if (!params || typeof params !== 'object') {
+            return '';
+        }
+
+        const query = Object.entries(params)
+            .filter(([, value]) => value !== null && value !== undefined)
+            .flatMap(([key, value]) => {
+                if (Array.isArray(value)) {
+                    return value.map(v => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`);
+                }
+                return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`;
+            })
+            .join('&');
+
+        return query ? `?${query}` : '';
+    }
 }

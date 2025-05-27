@@ -22,3 +22,23 @@ test('URI.enforceHtmExtension(), Should add .htm when needed', () => {
         { input: '/some/path/page.htm', expected: '/some/path/page.htm' },
     ].forEach(({ input, expected }) => expect(URI.enforceHtmExtension(input)).toBe(expected));
 });
+
+test('URI.buildQueryString(), Should build a query string from an object', () => {
+    [
+        {
+            expected: '',
+            params: { a: null, b: undefined },
+        },
+        {
+            expected: '?page=1&key=value&query=name%3Asome%20name&query=category%3Acategory&active=true',
+            params: {
+                page: 1,
+                key: 'value',
+                query: ['name:some name', 'category:category'],
+                active: true,
+                empty: null,
+                undefinedValue: undefined,
+            },
+        },
+    ].forEach(({ expected, params }) => expect(URI.buildQueryString(params)).toBe(expected));
+});
