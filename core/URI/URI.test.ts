@@ -42,3 +42,24 @@ test('URI.buildQueryString(), Should build a query string from an object', () =>
         },
     ].forEach(({ expected, params }) => expect(URI.buildQueryString(params)).toBe(expected));
 });
+
+test('URI.getGuid(), Should extract GUID when present', () => {
+    [
+        {
+            input: 'magasin-lille-d799d343-6809-4ae8-96dc-008a681e18be.htm',
+            expected: 'd799d343-6809-4ae8-96dc-008a681e18be',
+        },
+        {
+            input: 'magasin-montlucon-0168.htm',
+            expected: undefined,
+        },
+        {
+            input: 'page-123e4567-e89b-12d3-a456-426614174000.htm',
+            expected: '123e4567-e89b-12d3-a456-426614174000',
+        },
+        {
+            input: 'just-a-random-string.htm',
+            expected: undefined,
+        },
+    ].forEach(({ input, expected }) => expect(URI.getGuid(input)).toBe(expected));
+});
