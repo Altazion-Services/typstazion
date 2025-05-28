@@ -1,9 +1,10 @@
 export class Logger {
     public static devLog(...params: any): void {
-        if (
-            process?.env?.NODE_ENV === 'development' ||
-            (window && typeof window !== 'undefined' && import.meta.env?.DEV)
-        ) {
+        const isDev =
+            (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') ||
+            (typeof import.meta !== 'undefined' && import.meta.env?.DEV);
+
+        if (isDev) {
             console.log(`${new Date().toLocaleTimeString()} |`, ...params);
         }
     }
