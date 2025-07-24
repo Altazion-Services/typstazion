@@ -7,6 +7,10 @@ export default class URI {
             .replace(/([^:]\/)\/+/g, '$1');
     }
 
+    public static removePort(url: string) {
+        return url.replace(/:\d+/, '');
+    }
+
     public static enforceHtmExtension(path: string) {
         return path === '/' || path.endsWith('.htm')
             ? path

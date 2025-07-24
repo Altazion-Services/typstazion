@@ -23,6 +23,16 @@ test('URI.enforceHtmExtension(), Should add .htm when needed', () => {
     ].forEach(({ input, expected }) => expect(URI.enforceHtmExtension(input)).toBe(expected));
 });
 
+test('URI.removePort(), Should remove port from URL', () => {
+    [
+        { input: 'https://example.com:3000', expected: 'https://example.com' },
+        { input: 'https://example.com', expected: 'https://example.com' },
+        { input: 'http://localhost:8080', expected: 'http://localhost' },
+        { input: 'http://localhost', expected: 'http://localhost' },
+        { input: 'https://example.com/path/to/resource', expected: 'https://example.com/path/to/resource' },
+    ].forEach(({ input, expected }) => expect(URI.removePort(input)).toBe(expected));
+});
+
 test('URI.buildQueryString(), Should build a query string from an object', () => {
     [
         {
