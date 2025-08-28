@@ -4,4 +4,3 @@ export * from './LocalStorage';
 export * from './Object';
 export * from './URI';
 export * from './String';
-export * from './Logger';
