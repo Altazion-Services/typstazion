@@ -2,16 +2,30 @@ import fs from "fs";
 import Logger from "./Logger.mjs";
 
 export default class PackageLock {
+  /**
+   * Get the content of package-lock.json
+   * @returns {Object}
+   */
   static getPackageLock = () =>
     JSON.parse(fs.readFileSync("package-lock.json", "utf8"));
 
+  /**
+   * Get the list of infected packages
+   * See https://github.com/DataDog/malicious-software-packages-dataset for further information
+   * @returns {Promise<{[string]: null | Array<string> }>}
+   */
   static async getCompromisedPackagesAsync() {
     const source =
       "https://raw.githubusercontent.com/DataDog/malicious-software-packages-dataset/refs/heads/main/samples/npm/manifest.json";
     const response = await fetch(source);
     return await response.json();
   }
-  
+
+  /**
+   * Create an index of all packages in the package-lock.json
+   * @returns {Object}
+   */
+
   static indexPackages() {
     const lock = this.getPackageLock();
     const deps = lock.packages ?? lock.dependencies ?? {};
@@ -29,7 +43,10 @@ export default class PackageLock {
     scan(deps);
     return index;
   }
-
+  /**
+   * Validate packages based on the compromisedPackages list
+   * @returns {Promise<void>}
+   */
   static async validateAsync() {
     const processId = "PACKAGE-LOCK-VALIDATION";
     let errorCount = 0;
