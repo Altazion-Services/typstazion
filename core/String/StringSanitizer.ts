@@ -5,6 +5,13 @@ export default class StringSanitizer {
             .replace(/&[a-z]+;/g, match => StringSanitizer.commonHtmlCodes[match] || match);
     }
 
+    public static clearLineBreaks(str: string): string {
+        return str
+            .replace(/[\r\n]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
     public static commonHtmlCodes: Record<string, string> = {
         '&nbsp;': ' ',
         '&lt;': '<',
