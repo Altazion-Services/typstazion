@@ -11,4 +11,13 @@ export default class ObjectResolver {
     ): Partial<T> {
         return Object.fromEntries(Object.entries(obj).filter(([value]) => predicate(value))) as Partial<T>;
     }
+
+    /**
+     * Verfies if an object is empty (has no own properties).
+     * @param obj The object to check.
+     * @returns True if the object is empty, false otherwise.
+     */
+    public static isEmpty(obj: Record<string, any>): boolean {
+        return Object.keys(obj).length === 0 && obj.constructor === Object;
+    }
 }
