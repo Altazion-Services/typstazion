@@ -1,10 +1,9 @@
 export default class URI {
     public static resolve(...paths: Array<string>) {
         return paths
-            .map((part, index) => (index === 0 ? part.replace(/\/+$/, '') : part.replace(/^\/+|\/+$/g, '')))
-            .filter(Boolean)
-            .join('/')
-            .replace(/([^:]\/)\/+/g, '$1');
+          .join("/") 
+          .replace(/(^|[^:])\/{2,}/g, "$1/") 
+          .replace(/\/+$/, "");
     }
 
     public static removePort(url: string) {
