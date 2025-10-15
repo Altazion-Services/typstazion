@@ -1,4 +1,5 @@
 export * from './Debouncer';
+export * from './Http';
 export * from './JSON';
 export * from './LocalStorage';
 export * from './Object';
