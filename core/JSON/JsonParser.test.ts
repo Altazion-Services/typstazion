@@ -15,10 +15,10 @@ test('JsonParser: safeParse(), Should invoke callback for invalid JSON string', 
     const json = '{"name": "John"';
     let str = '';
     let error = new Error();
-    const callBack = (s: string, e: Error) => {
+    function callBack(s: string, e: Error) {
         str = s;
         error = e;
-    };
+    }
     JsonParser.safeParse(json, callBack);
     expect(str).toBe(json);
     expect(error).toBeInstanceOf(Error);
