@@ -9,9 +9,11 @@ export class LocalStorage {
         return (JsonParser.safeParse(item) ?? item) as T;
     }
 
-    public static set<T>(key: string, value: T): void {
-        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+    public static set<T>(key: string, value: T): T {
+        const resolved = typeof value === 'string' ? value : JSON.stringify(value);
+        localStorage.setItem(key, resolved);
         window.dispatchEvent(new Event(`LS_SET_${key}`));
+        return value;
     }
 
     public static remove(key: string) {
