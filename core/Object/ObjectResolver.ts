@@ -20,4 +20,54 @@ export default class ObjectResolver {
     public static isEmpty(obj: Record<string, any>): boolean {
         return Object.keys(obj).length === 0 && obj.constructor === Object;
     }
+
+    /**
+     * Verifies if the provided values are deeply equal.
+     * @param params The values to compare.
+     * @returns True if each value is deeply equal to the next, false otherwise.
+     */
+    public static equals(...params: any[]): boolean {
+        if (params.length < 2) return true;
+
+        function eq(a: any, b: any): boolean {
+            if (a === null && b === null) {
+                return true;
+            }
+            if (a === null || b === null) {
+                return false;
+            }
+            if (a === undefined && b === undefined) {
+                return true;
+            }
+            if (a === undefined || b === undefined) {
+                return false;
+            }
+            if (Array.isArray(a) && Array.isArray(b)) {
+                if (a.length !== b.length) return false;
+                return a.every((v, i) => eq(v, b[i]));
+            }
+            if (Array.isArray(a) || Array.isArray(b)) {
+                return false;
+            }
+            if (typeof a === 'object' && typeof b === 'object') {
+                const ka = Object.keys(a);
+                const kb = Object.keys(b);
+                if (ka.length !== kb.length) return false;
+                return ka.every(k => eq(a[k], b[k]));
+            }
+            if (typeof a === 'object' || typeof b === 'object') {
+                return false;
+            }
+            if (typeof a !== typeof b) {
+                return false;
+            }
+
+            return a === b;
+        }
+
+        return params.every((v, i, arr) => {
+            if (i === 0) return true;
+            return eq(v, arr[i - 1]);
+        });
+    }
 }

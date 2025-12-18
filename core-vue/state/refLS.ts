@@ -1,5 +1,5 @@
 import { type Ref, ref, watch, onMounted, onBeforeUnmount } from 'vue';
-import { LocalStorage } from '../../core';
+import { LocalStorage, ObjectResolver } from '../../core';
 
 function resolveDefault<T>(key: string, defaultValue: T | undefined): T | undefined {
     let stored = LocalStorage.get<T>(key);
@@ -22,7 +22,10 @@ export function refLS<T>(key: string, defaultValue?: T): Ref<T | undefined> {
     const state = ref(resolveDefault<T>(key, defaultValue)) as Ref<T | undefined>;
 
     function onSet(value?: T) {
-        state.value = value;
+        // Avoid unnecessary updates and thus infinite loops caused by reactivity.
+        if (!ObjectResolver.equals(state.value, value)) {
+            state.value = value;
+        }
     }
 
     function onRemove() {
