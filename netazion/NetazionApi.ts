@@ -136,8 +136,8 @@ export class NetazionApi {
                 if (this.config.log === 'info') {
                     console.log(`NetazionApi.disconnectEventSource() Disconnected EventSource: ${key}`);
                 }
-            } else if (this.config.log !== 'none') {
-                console.error(`NetazionApi.disconnectEventSource() No EventSource found for key: ${key}`);
+            } else if (this.config.log === 'info') {
+                console.log(`NetazionApi.disconnectEventSource() No EventSource found for key: ${key}`);
             }
         } else {
             for (const key in this.eventSources) {
