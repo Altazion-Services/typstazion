@@ -1,4 +1,5 @@
 export * from './ClassName';
+export * from './Date';
 export * from './Debouncer';
 export * from './Http';
 export * from './JSON';
