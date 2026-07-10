@@ -24,6 +24,17 @@ test('URI.enforceHtmExtension(), Should add .htm when needed', () => {
     ].forEach(({ input, expected }) => expect(URI.enforceHtmExtension(input)).toBe(expected));
 });
 
+test('URI.getPath(), Should return the pathname of an absolute URL and leave a path untouched', () => {
+    [
+        { input: 'https://www.king-jouet.com/jeu-jouet/ref-982840-maison.htm', expected: '/jeu-jouet/ref-982840-maison.htm' },
+        { input: 'https://www.king-jouet.com/', expected: '/' },
+        { input: 'https://www.king-jouet.com', expected: '/' },
+        { input: 'https://www.king-jouet.com/page.htm?utm=x#frag', expected: '/page.htm' },
+        { input: '/jeu-jouet/ref-982840-maison.htm', expected: '/jeu-jouet/ref-982840-maison.htm' },
+        { input: 'jeu-jouet/ref-982840-maison.htm', expected: 'jeu-jouet/ref-982840-maison.htm' },
+    ].forEach(({ input, expected }) => expect(URI.getPath(input)).toBe(expected));
+});
+
 test('URI.removePort(), Should remove port from URL', () => {
     [
         { input: 'https://example.com:3000', expected: 'https://example.com' },

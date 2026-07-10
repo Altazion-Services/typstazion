@@ -10,6 +10,19 @@ export default class URI {
         return url.replace(/:\d+/, '');
     }
 
+    /**
+     * Extract the pathname from an absolute URL, or return the value untouched
+     * when it is already a path. Useful to avoid double-prefixing an origin
+     * (e.g. resolving a full URL against `mainUrl`).
+     */
+    public static getPath(urlOrPath: string) {
+        try {
+            return new URL(urlOrPath).pathname;
+        } catch {
+            return urlOrPath;
+        }
+    }
+
     public static enforceHtmExtension(path: string) {
         return path === '/' || path.endsWith('.htm')
             ? path
